@@ -1,9 +1,11 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Mutagen.Bethesda;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
+
 
 namespace HeightsOfSkyrim
 {
@@ -21,7 +23,7 @@ namespace HeightsOfSkyrim
         private static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
             ModKey heights = ModKey.FromNameAndExtension("Heights_of_Skyrim.esp");
-            state.LoadOrder.TryGetIfEnabledAndExists(heights, out ISkyrimModGetter heightsMod);
+            state.LoadOrder.TryGetIfEnabledAndExists(heights, out var heightsMod);
             if (heightsMod is null)
             {
                 throw new Exception("Your Heights_of_Skyrim.esp is not in load order or above Synthesis.esp in LO");

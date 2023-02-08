@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using Mutagen.Bethesda;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Skyrim;
@@ -16,7 +17,7 @@ namespace HeightsOfSkyrim
             return await SynthesisPipeline.Instance
                 .AddPatch<ISkyrimMod, ISkyrimModGetter>(RunPatch)
                 .SetTypicalOpen(GameRelease.SkyrimSE, "HeightOfSkyrimPatch.esp")
-                .AddRunnabilityCheck(state => state.LoadOrder.AssertHasMod(ModKey.FromNameAndExtension("Heights_of_Skyrim.esp"), true, "\n\nYour Heights_of_Skyrim.esp is not in load order or above Synthesis.esp in LO\n\n"))
+                .AddRunnabilityCheck(state => Debug.Assert(state.LoadOrder.ContainsKey(ModKey.FromNameAndExtension("Heights_of_Skyrim.esp")), "\n\nYour Heights_of_Skyrim.esp is not in load order or above Synthesis.esp in LO\n\n"))
                 .Run(args);
         }
 
